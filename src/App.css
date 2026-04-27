@@ -1,38 +1,339 @@
-.App {
-  text-align: center;
+/* ── Theme Variables ─────────────────────────────────────── */
+:root {
+  --transition: 0.35s ease;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Light Mode */
+body.light {
+  --bg: #f0f4f8;
+  --surface: #ffffff;
+  --surface2: #e8edf3;
+  --border: #d1d9e0;
+  --text: #1a202c;
+  --text-muted: #718096;
+  --heading: #2d3748;
+
+  --primary: #4361ee;
+  --primary-hover: #3451d1;
+  --success: #38a169;
+  --success-hover: #2f855a;
+
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+
+  --gantt-idle: #cbd5e0;
+  --gantt-process: #bee3f8;
+  --gantt-text: #2b6cb0;
+
+  --table-stripe: #f7fafc;
+  --table-head: #edf2f7;
+
+  --input-bg: #ffffff;
+  --input-border: #cbd5e0;
+  --input-focus: #4361ee;
+
+  /* ✅ Heading gradient */
+  --heading-gradient: linear-gradient(90deg, #4361ee, #a78bfa);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Dark Mode */
+body.dark {
+  --bg: #0f1117;
+  --surface: #1a1d27;
+  --surface2: #252836;
+  --border: #2d3250;
+  --text: #e2e8f0;
+  --text-muted: #94a3b8;
+  --heading: #f0f4ff;
+
+  --primary: #6c63ff;
+  --primary-hover: #574fd6;
+  --success: #48bb78;
+  --success-hover: #38a169;
+
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.45);
+
+  --gantt-idle: #2d3250;
+  --gantt-process: #1e3a5f;
+  --gantt-text: #90cdf4;
+
+  --table-stripe: #1f2235;
+  --table-head: #252836;
+
+  --input-bg: #1a1d27;
+  --input-border: #2d3250;
+  --input-focus: #6c63ff;
+
+  /* ✅ Dark gradient (FIXED) */
+  --heading-gradient: linear-gradient(90deg, #8b9cff, #c4b5fd);
 }
 
-.App-header {
-  background-color: #282c34;
+/* ── Base ─────────────────────────────────────────────────── */
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  transition: background var(--transition), color var(--transition);
   min-height: 100vh;
+}
+
+/* ── Toggle Button ────────────────────────────────────────── */
+.theme-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 1.2rem;
+  z-index: 1000;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 50px;
+  padding: 0.4rem 1rem;
+  cursor: pointer;
   display: flex;
-  flex-direction: column;
   align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+  box-shadow: var(--shadow);
+  transition: all var(--transition);
+}
+
+.theme-toggle:hover {
+  background: var(--surface2);
+  transform: scale(1.05);
+}
+
+.theme-toggle .icon {
+  font-size: 1.1rem;
+}
+
+/* ── App Container ────────────────────────────────────────── */
+.scheduler-app {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+/* ── Page Heading ─────────────────────────────────────────── */
+.app-heading {
+  text-align: center;
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: var(--heading);
+  margin-bottom: 2rem;
+  letter-spacing: -0.5px;
+}
+
+/* ✅ Gradient applied properly */
+.app-heading span {
+  background: var(--heading-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ✨ Optional glow in dark mode */
+body.dark .app-heading {
+  text-shadow: 0 2px 10px rgba(8, 7, 10, 0.4);
+}
+
+/* ── Cards ────────────────────────────────────────────────── */
+.theme-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.4rem 1.6rem;
+  box-shadow: var(--shadow);
+  margin-bottom: 1.5rem;
+  transition: background var(--transition), border var(--transition), box-shadow var(--transition);
+}
+
+.theme-card h5 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--heading);
+  margin-bottom: 1rem;
+  letter-spacing: 0.3px;
+}
+
+/* ── Inputs ───────────────────────────────────────────────── */
+.theme-input {
+  background: var(--input-bg) !important;
+  border: 1.5px solid var(--input-border) !important;
+  border-radius: 8px !important;
+  color: var(--text) !important;
+  font-size: 0.9rem !important;
+  padding: 0.55rem 0.85rem !important;
+  transition: border-color var(--transition), box-shadow var(--transition) !important;
+}
+
+.theme-input::placeholder {
+  color: var(--text-muted) !important;
+}
+
+.theme-input:focus {
+  border-color: var(--input-focus) !important;
+  box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.18) !important;
+  outline: none !important;
+}
+
+/* ── Buttons ──────────────────────────────────────────────── */
+.btn-add {
+  background: var(--primary) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  color: #fff !important;
+  font-weight: 600 !important;
+  padding: 0.55rem 1rem !important;
+  transition: background var(--transition), transform 0.15s !important;
+}
+
+.btn-add:hover {
+  background: var(--primary-hover) !important;
+  transform: translateY(-1px);
+}
+
+.btn-run {
+  background: var(--success) !important;
+  border: none !important;
+  border-radius: 10px !important;
+  color: #fff !important;
+  font-weight: 700 !important;
+  font-size: 1rem !important;
+  padding: 0.65rem 2.5rem !important;
+  letter-spacing: 0.5px;
+  transition: background var(--transition), transform 0.15s !important;
+  box-shadow: 0 4px 14px rgba(72, 187, 120, 0.35);
+}
+
+.btn-run:hover {
+  background: var(--success-hover) !important;
+  transform: translateY(-2px);
+}
+
+/* ── Tables ───────────────────────────────────────────────── */
+.theme-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.theme-table thead tr {
+  background: var(--table-head);
+  color: var(--heading);
+}
+
+.theme-table th,
+.theme-table td {
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+  color: var(--text);
+  transition: background var(--transition);
+}
+
+.theme-table tbody tr:nth-child(even) {
+  background: var(--table-stripe);
+}
+
+.theme-table tbody tr:hover {
+  background: var(--surface2);
+}
+
+.theme-table th {
+  font-weight: 700;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ── Average Cards ────────────────────────────────────────── */
+.avg-cards {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.2rem;
+}
+
+.avg-card {
+  flex: 1;
+  border-radius: 12px;
+  padding: 1.2rem;
+  text-align: center;
+  color: #fff;
+  transition: transform 0.2s;
+}
+
+.avg-card:hover {
+  transform: translateY(-3px);
+}
+
+.avg-card .label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  opacity: 0.8;
+  margin-bottom: 0.4rem;
+}
+
+.avg-card .value {
+  font-size: 2.2rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.avg-card .unit {
+  font-size: 0.72rem;
+  opacity: 0.65;
+  margin-top: 0.3rem;
+}
+
+.avg-card.wt {
+  background: linear-gradient(135deg, #1e3a5f, #4361ee);
+}
+
+.avg-card.tat {
+  background: linear-gradient(135deg, #1e5f3a, #38a169);
+}
+
+/* ── Gantt Chart ──────────────────────────────────────────── */
+.gantt-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.gantt-cell {
+  min-width: 56px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.45rem 0.3rem;
+  text-align: center;
+  background: var(--gantt-process);
+  color: var(--gantt-text);
+  font-weight: 600;
+  font-size: 0.88rem;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.gantt-cell.idle {
+  background: var(--gantt-idle);
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.gantt-cell small {
+  display: block;
+  font-size: 0.7rem;
+  opacity: 0.65;
+  margin-top: 2px;
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .avg-cards {
+    flex-direction: column;
   }
-  to {
-    transform: rotate(360deg);
+
+  .app-heading {
+    font-size: 1.4rem;
   }
 }
